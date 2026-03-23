@@ -28,7 +28,7 @@ def safe_json_parse(response: str):
     except json.JSONDecodeError:
         pass
 
-    # 🔥 Try fixing escaped JSON
+    #  Try fixing escaped JSON
     try:
         cleaned = response.replace('\\"', '"')
         return json.loads(cleaned)
