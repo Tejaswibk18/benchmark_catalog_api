@@ -183,14 +183,15 @@ def patch_benchmark_api(
         return error_response("internal server error", 500)
 
 @router.delete("/benchmark/{id}")
-def delete_benchmark_api(id: str, user=Depends(get_current_user)):
-
+def delete_benchmark(
+    id: str,
+    user: dict = Depends(get_current_user)
+):
     try:
-
-        data = delete_benchmark_service(id, user["email"])
+        data = delete_benchmark_service(id, user)
 
         return success_response(
-            "benchmark archived successfully",
+            "benchmark deleted successfully",
             data,
             200
         )
@@ -198,5 +199,5 @@ def delete_benchmark_api(id: str, user=Depends(get_current_user)):
     except ValueError as e:
         return error_response(str(e), 400)
 
-    except Exception as e:
-        return error_response(str(e), 500)
+    except Exception:
+        return error_response("internal server error", 500)

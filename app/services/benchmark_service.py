@@ -232,16 +232,19 @@ def delete_benchmark_service(id, user):
 
     data = fetch_one(id)
 
-    data or (_ for _ in ()).throw(ValueError("benchmark not found"))
+    if not data:
+        raise ValueError("benchmark not found")
 
-    data.get("created_by") != user and (_ for _ in ()).throw(
-        ValueError("only owner can delete benchmark")
-    )
+    user_name = user.get("user") if user else "system"
 
-    data.get("status") not in ALLOWED_DELETE_STATUS and (_ for _ in ()).throw(
-        ValueError("benchmark cannot be deleted in current status")
-    )
+    if data.get("created_by") != user_name:
+        raise ValueError("only owner can delete benchmark")
+
+    if data.get("status") not in ALLOWED_DELETE_STATUS:
+        raise ValueError("benchmark cannot be deleted in current status")
 
     archive_benchmark(id)
 
     return {"status": "ARCHIVED"}
+
+
