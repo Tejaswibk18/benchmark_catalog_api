@@ -1,5 +1,4 @@
 from app.database.connection import benchmark_collection
-from app.utils.response import error_response
 import time
 
 from app.repositories.benchmark_repository import fetch_benchmarks , archive_benchmark

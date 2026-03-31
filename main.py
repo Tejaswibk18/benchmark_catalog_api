@@ -3,6 +3,10 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from app.routes.benchmark_routes import router
+from app.routes.platform_routes import router as platform_router
+
+from app.routes.benchmark_routes import router as benchmark_router
+from app.routes.benchmark_execution_routes import router as execution_router
 
 app = FastAPI(
     title="Benchmark Catalog API",
@@ -10,7 +14,9 @@ app = FastAPI(
 )
 
 app.include_router(router)
-
+app.include_router(benchmark_router)
+app.include_router(execution_router)
+app.include_router(platform_router)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -28,6 +34,9 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 
+# from app.routes.benchmark_execution_routes import router as ai_router
+
+# app.include_router(ai_router)
 
 
 # from fastapi import FastAPI

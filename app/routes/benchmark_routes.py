@@ -2,9 +2,9 @@ from fastapi import APIRouter, Query, Body, Depends
 
 from app.auth.jwt_handler import create_token
 from fastapi import APIRouter
-from app.services.ai_service import validate_benchmark
-from app.services.ai_service import generate_benchmark_from_text
-from app.services.ai_service import auto_fix_benchmark
+# from app.services.ai_service import validate_benchmark
+# from app.services.ai_service import generate_benchmark_from_text
+# from app.services.ai_service import auto_fix_benchmark
 
 from app.auth.auth_dependency import get_current_user
 from app.services.benchmark_service import (
@@ -20,52 +20,6 @@ from app.utils.response import success_response, error_response
 
 
 router = APIRouter(tags=["Benchmark"])
-
-
-# @router.post("/ai-validate")
-# async def ai_validate(payload: dict):
-
-#     result = validate_benchmark(payload)
-
-#     return {
-#         "status": "success",
-#         "message": "AI validation completed",
-#         "status_code": 200,
-#         "data": result
-#     }
-
-
-# @router.post("/generate-benchmark")
-# async def generate_benchmark(payload: dict):
-
-#     prompt = payload.get("prompt")
-
-#     result = generate_benchmark_from_text(prompt)
-
-#     return {
-#         "status": "success",
-#         "message": "Benchmark generated using AI",
-#         "status_code": 200,
-#         "data": result
-#     }
-
-
-# @router.post("/ai-fix")
-# def ai_fix(payload: dict):
-
-#     try:
-
-#         result = auto_fix_benchmark(payload)
-
-#         return success_response(
-#             "AI auto-fix completed",
-#             result,
-#             200
-#         )
-
-#     except Exception:
-#         return error_response("internal server error", 500)
-
 
 @router.post("/benchmark")
 def create(payload: BenchmarkCreate):
@@ -181,6 +135,7 @@ def patch_benchmark_api(
 
     except Exception:
         return error_response("internal server error", 500)
+    
 
 @router.delete("/benchmark/{id}")
 def delete_benchmark(
@@ -201,3 +156,48 @@ def delete_benchmark(
 
     except Exception:
         return error_response("internal server error", 500)
+
+
+# @router.post("/ai-validate")
+# async def ai_validate(payload: dict):
+
+#     result = validate_benchmark(payload)
+
+#     return {
+#         "status": "success",
+#         "message": "AI validation completed",
+#         "status_code": 200,
+#         "data": result
+#     }
+
+
+# @router.post("/generate-benchmark")
+# async def generate_benchmark(payload: dict):
+
+#     prompt = payload.get("prompt")
+
+#     result = generate_benchmark_from_text(prompt)
+
+#     return {
+#         "status": "success",
+#         "message": "Benchmark generated using AI",
+#         "status_code": 200,
+#         "data": result
+#     }
+
+
+# @router.post("/ai-fix")
+# def ai_fix(payload: dict):
+
+#     try:
+
+#         result = auto_fix_benchmark(payload)
+
+#         return success_response(
+#             "AI auto-fix completed",
+#             result,
+#             200
+#         )
+
+#     except Exception:
+#         return error_response("internal server error", 500)
