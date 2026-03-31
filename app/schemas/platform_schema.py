@@ -19,6 +19,7 @@ class PlatformCreate(BaseModel):
     server_name: str
     ip_address: str
     os: str
+    password:str
 
     cpu_usage: float
     memory_usage: float
@@ -28,6 +29,6 @@ class PlatformCreate(BaseModel):
     # -------------------------------
     # VALIDATION
     # -------------------------------
-    @field_validator("server_name", "ip_address", "os")
+    @field_validator("server_name", "ip_address", "os","password")
     def validate_fields(cls, v, info):
         return validate_required_text(v, info.field_name)
