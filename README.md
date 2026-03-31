@@ -1,23 +1,61 @@
-# 🚀 Benchmark Catalog API
+# 🚀 Benchmark Platform API
 
-A **FastAPI + MongoDB** based backend system to manage benchmark templates with validation, version history, and soft delete functionality.
+A **FastAPI + MongoDB** based backend system to manage:
+
+* 📚 Benchmark Catalog
+* ⚙️ Benchmark Execution
+* 🖥️ Platform Pool
+
+with validation, workflow orchestration, versioning, and soft delete support.
 
 ---
 
-## 📌 Features
+# 📌 Features
 
-* ✅ Create benchmark catalog
-* 🔍 Get all benchmarks with filters
+## 📚 Benchmark Catalog
+
+* ✅ Create benchmark templates
+* 🔍 Get benchmarks with filters
 * ✏️ Update & Patch benchmarks
 * 🗑️ Soft delete (ARCHIVED status)
 * 🧾 Version history tracking
-* 🔐 JWT-based authentication (for delete)
-* 🧠 Field-level validation (Pydantic v2)
-* ⚡ Optimized service logic (minimal if-else)
 
 ---
 
-## 🏗️ Tech Stack
+## ⚙️ Benchmark Execution
+
+* 🚀 Execute benchmarks using workflows
+* 🔗 Multi-stage workflow support
+* 📊 Dynamic parameters & schema validation
+* 🔄 Execution ↔ Workflow linking
+* 📁 Optional workflow catalog storage
+* 📥 Fetch execution with full workflow details
+* ✏️ Patch execution (sync across collections)
+* 🗑️ Soft delete execution
+
+---
+
+## 🖥️ Platform Pool
+
+* 🧩 Manage platform resources (SUTs)
+* ➕ Add / update platform entries
+* 🔍 Fetch available platforms
+* 🔗 Map platforms to executions
+* ⚙️ Resource configuration support
+
+---
+
+## 🔐 Security & Validation
+
+* 🔐 JWT-based authentication (Delete APIs)
+* 🧠 Pydantic v2 field-level validation
+* ✅ Regex-based input validation
+* 🔄 Conditional field validation
+* ⚡ Optimized service logic
+
+---
+
+# 🏗️ Tech Stack
 
 * **Backend:** FastAPI
 * **Database:** MongoDB
@@ -27,10 +65,10 @@ A **FastAPI + MongoDB** based backend system to manage benchmark templates with 
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```
-benchmark_catalog_api
+benchmark_platform_api
 │
 ├── app
 │   ├── auth
@@ -38,16 +76,24 @@ benchmark_catalog_api
 │   │   └── auth_dependency.py
 │   │
 │   ├── routes
-│   │   └── benchmark_routes.py
+│   │   ├── benchmark_routes.py
+│   │   ├── benchmark_execution_routes.py
+│   │   └── platform_routes.py
 │   │
 │   ├── services
-│   │   └── benchmark_service.py
+│   │   ├── benchmark_service.py
+│   │   ├── benchmark_execution_service.py
+│   │   └── platform_service.py
 │   │
 │   ├── repositories
-│   │   └── benchmark_repository.py
+│   │   ├── benchmark_repository.py
+│   │   ├── benchmark_execution_repository.py
+│   │   └── platform_repository.py
 │   │
 │   ├── schemas
-│   │   └── benchmark_schema.py
+│   │   ├── benchmark_schema.py
+│   │   ├── benchmark_execution_schema.py
+│   │   └── platform_schema.py
 │   │
 │   ├── database
 │   │   └── connection.py
@@ -60,11 +106,11 @@ benchmark_catalog_api
 
 ---
 
-## ⚙️ Installation
+# ⚙️ Installation
 
 ```bash
 git clone <your-repo-url>
-cd benchmark_catalog_api
+cd benchmark_platform_api
 
 python -m venv venv
 venv\Scripts\activate   # Windows
@@ -74,13 +120,13 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Run Server
+# ▶️ Run Server
 
 ```bash
 uvicorn main:app --reload
 ```
 
-Open Swagger UI:
+👉 Swagger UI:
 
 ```
 http://127.0.0.1:8000/docs
@@ -88,9 +134,9 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## 🔐 Authentication Flow
+# 🔐 Authentication Flow
 
-Currently, only **DELETE API is protected**.
+Currently, only **DELETE APIs are protected**
 
 ### 1. Get Token
 
@@ -110,7 +156,7 @@ Response:
 
 ### 2. Authorize in Swagger
 
-Click **Authorize 🔓** and paste:
+Click **Authorize 🔓**
 
 ```
 Bearer <your_token>
@@ -118,72 +164,84 @@ Bearer <your_token>
 
 ---
 
-### 3. Use Protected API
+### 3. Use Protected APIs
 
 ```
 DELETE /benchmark/{id}
+DELETE /execution/{id}
+DELETE /platform/{id}
 ```
 
 ---
 
-## 📌 API Endpoints
+# 📌 API Endpoints
+
+## 📚 Benchmark Catalog
 
 | Method | Endpoint        | Description      | Auth |
 | ------ | --------------- | ---------------- | ---- |
 | POST   | /benchmark      | Create benchmark | ❌    |
-| GET    | /benchmark      | Get all / filter | ❌    |
+| GET    | /benchmark      | Get / filter     | ❌    |
 | PUT    | /benchmark/{id} | Full update      | ❌    |
 | PATCH  | /benchmark/{id} | Partial update   | ❌    |
 | DELETE | /benchmark/{id} | Soft delete      | 🔒   |
-| POST   | /login          | Get JWT token    | ❌    |
 
 ---
 
-## 📊 Benchmark Schema (Simplified)
+## ⚙️ Benchmark Execution
+
+| Method | Endpoint        | Description        | Auth |
+| ------ | --------------- | ------------------ | ---- |
+| POST   | /execution      | Create execution   | ❌    |
+| GET    | /execution      | Get execution data | ❌    |
+| PATCH  | /execution/{id} | Update execution   | ❌    |
+| DELETE | /execution/{id} | Soft delete        | 🔒   |
+
+---
+
+## 🖥️ Platform Pool
+
+| Method | Endpoint       | Description     | Auth |
+| ------ | -------------- | --------------- | ---- |
+| POST   | /platform      | Add platform    | ❌    |
+| GET    | /platform      | Get platforms   | ❌    |
+| PATCH  | /platform/{id} | Update platform | ❌    |
+| DELETE | /platform/{id} | Soft delete     | 🔒   |
+
+---
+
+# 📊 Benchmark Execution Schema (Simplified)
 
 ```json
 {
-  "catalog_name": "string",
   "benchmark_name": "string",
-  "benchmark_category": "string",
-  "scripts": {
-    "sut_teardown": "string",
-    "sut_setup": "string"
-  },
-  "run_parameters": {},
-  "metrics": ["string"],
-  "visibility": "Public",
-  "status": "DRAFT"
+  "catalog_name": "string",
+  "environment": "string",
+  "workflow": {
+    "stages": [
+      {
+        "stage_name": "string",
+        "stage_order": 1,
+        "task_name": "string",
+        "executor": {}
+      }
+    ]
+  }
 }
 ```
 
 ---
 
-## 🔁 Status Workflow
+# 🔄 Workflow System
 
-```
-DRAFT → PENDING-APPROVAL → APPROVED → PUBLISHED
-                ↓
-             REJECTED
-```
-
-Delete allowed only when:
-
-```
-DRAFT | PENDING-APPROVAL | REJECTED
-```
-
-Soft delete updates:
-
-```
-status → ARCHIVED
-```
+* Multi-stage execution pipeline
+* Ordered execution via `stage_order`
+* Dynamic executor support
+* Parameter schema driven execution
 
 ---
 
-## 🧾 History Tracking
-
-Every update/patch stores:
+# 🧾 History Tracking (Catalog)
 
 ```json
 {
@@ -203,50 +261,80 @@ Every update/patch stores:
 
 ---
 
-## 🧠 Validations Implemented
+# 🔁 Status Workflow
 
-* Required fields check
-* Alphabet + underscore validation
-* OS validation (`windows`, `linux`)
-* Run parameters key validation
-* Metrics non-empty validation
-* LTS mode conditional validation
+```
+DRAFT → PENDING-APPROVAL → APPROVED → PUBLISHED
+                ↓
+             REJECTED
+```
+
+---
+
+# 🧠 Validations Implemented
+
+* Required fields validation
+* Regex validation (A-Z, 0-9, _)
+* Workflow structure validation
+* Parameter schema validation
 * Status validation
+* Conditional validation (workflow catalog save)
 
 ---
 
-## 🔒 RBAC Logic (Delete Only)
+# 🔒 RBAC Logic (Delete)
 
-* Only **owner can delete**
-* Condition:
+* Only owner can delete
 
-  ```
-  created_by == user_email
-  ```
-* Status must be:
+Condition:
 
-  ```
-  DRAFT | PENDING-APPROVAL | REJECTED
-  ```
+```
+created_by == user_email
+```
+
+Allowed statuses:
+
+```
+DRAFT | PENDING-APPROVAL | REJECTED
+```
+
+Soft delete updates:
+
+```
+status → ARCHIVED
+```
 
 ---
 
-## 🛠️ Future Improvements
+# 🔗 Data Relationships
+
+```
+Benchmark Execution
+        │
+        ├── workflow_runs
+        │
+        └── workflow_catalog (optional)
+```
+
+---
+
+# 🛠️ Future Improvements
 
 * Full RBAC (Admin, Reviewer roles)
-* User authentication system (DB-based)
-* Status transition guard
+* DB-based authentication
 * Pagination & sorting
 * Logging & monitoring
+* Execution status tracking (RUNNING, SUCCESS, FAILED)
+* Retry & scheduling engine
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
-Tejaswi BK
+**Tejaswi BK**
 
 ---
 
-## ⭐ If you like this project
+# ⭐ If you like this project
 
 Give it a ⭐ on GitHub!
