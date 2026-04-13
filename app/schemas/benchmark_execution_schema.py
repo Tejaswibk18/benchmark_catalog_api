@@ -160,7 +160,7 @@ class BenchmarkExecutionCreate(BaseModel):
             if not self.workflow_visibility:
                 raise ValueError("workflow_visibility is required when save_to_workflow_catalog is true")
 
-            if self.workflow_visibility not in ["PUBLIC", "PRIVATE"]:
+            if self.workflow_visibility not in ["PUBLIC", "PRIVATE" , "public" , "private"]:
                 raise ValueError("workflow_visibility must be PUBLIC or PRIVATE")
 
         return self
@@ -176,6 +176,7 @@ class BenchmarkExecutionPatch(BaseModel):
     group_id: str | None = None
     environment: str | None = None
     no_of_sut: int | None = None
+    stage_order: int | None = None
 
     @field_validator(
         "benchmark_name",

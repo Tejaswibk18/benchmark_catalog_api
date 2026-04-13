@@ -7,6 +7,7 @@ from app.routes.platform_routes import router as platform_router
 
 from app.routes.benchmark_routes import router as benchmark_router
 from app.routes.benchmark_execution_routes import router as execution_router
+from app.routes.job_routes import router as job_router
 
 app = FastAPI(
     title="Benchmark Catalog API",
@@ -17,6 +18,7 @@ app.include_router(router)
 app.include_router(benchmark_router)
 app.include_router(execution_router)
 app.include_router(platform_router)
+app.include_router(job_router)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):

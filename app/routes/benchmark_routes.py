@@ -2,9 +2,9 @@ from fastapi import APIRouter, Query, Body, Depends
 
 from app.auth.jwt_handler import create_token
 from fastapi import APIRouter
-# from app.services.ai_service import validate_benchmark
-# from app.services.ai_service import generate_benchmark_from_text
-# from app.services.ai_service import auto_fix_benchmark
+from app.services.ai_service import validate_benchmark
+from app.services.ai_service import generate_benchmark_from_text
+from app.services.ai_service import auto_fix_benchmark
 
 from app.auth.auth_dependency import get_current_user
 from app.services.benchmark_service import (
@@ -171,33 +171,33 @@ def delete_benchmark(
 #     }
 
 
-# @router.post("/generate-benchmark")
-# async def generate_benchmark(payload: dict):
+@router.post("/generate-benchmark")
+async def generate_benchmark(payload: dict):
 
-#     prompt = payload.get("prompt")
+    prompt = payload.get("prompt")
 
-#     result = generate_benchmark_from_text(prompt)
+    result = generate_benchmark_from_text(prompt)
 
-#     return {
-#         "status": "success",
-#         "message": "Benchmark generated using AI",
-#         "status_code": 200,
-#         "data": result
-#     }
+    return {
+        "status": "success",
+        "message": "Benchmark generated using AI",
+        "status_code": 200,
+        "data": result
+    }
 
 
-# @router.post("/ai-fix")
-# def ai_fix(payload: dict):
+@router.post("/ai-fix")
+def ai_fix(payload: dict):
 
-#     try:
+    try:
 
-#         result = auto_fix_benchmark(payload)
+        result = auto_fix_benchmark(payload)
 
-#         return success_response(
-#             "AI auto-fix completed",
-#             result,
-#             200
-#         )
+        return success_response(
+            "AI auto-fix completed",
+            result,
+            200
+        )
 
-#     except Exception:
-#         return error_response("internal server error", 500)
+    except Exception:
+        return error_response("internal server error", 500)

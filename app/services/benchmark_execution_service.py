@@ -1,7 +1,8 @@
 from app.database.connection import (
     benchmark_execution_collection,
     workflow_runs_collection,
-    workflow_catalog_collection
+    workflow_catalog_collection,
+    jobs_collection
 )
 
 from bson import ObjectId
@@ -83,6 +84,11 @@ def create_benchmark_execution_service(payload):
             {"$set": {"workflow_run_id": workflow_run_id}}
         )
 
+        jobs = build_jobs_from_workflow(workflow, execution_id)
+
+        if jobs:
+            jobs_collection.insert_many(jobs)
+
         # -------------------------------
         # 4. OPTIONAL workflow_catalog
         # -------------------------------
@@ -115,84 +121,99 @@ def create_benchmark_execution_service(payload):
 # -------------------------------
 # GET
 # -------------------------------
-def get_benchmark_execution_service(id=None, benchmark_name=None, benchmark_category=None):
+def get_benchmark_execution_service(
+    id=None,
+    status=None,
+    search=None,
+    page=1,
+    limit=10
+):
     try:
-        query = {}
-        execution_id = None
+        skip = (page - 1) * limit
 
         # -------------------------------
-        # HANDLE ID
+        # BASE QUERY ON JOBS
         # -------------------------------
-        if id:
-            try:
-                obj_id = ObjectId(id)
-            except:
-                raise ValueError("invalid id")
-
-            execution = benchmark_execution_collection.find_one({"_id": obj_id})
-            workflow_run = workflow_runs_collection.find_one({"_id": obj_id})
-            catalog = workflow_catalog_collection.find_one({"_id": obj_id})
-
-            execution_id = (
-                execution and execution["_id"]
-                or workflow_run and workflow_run.get("execution_id")
-                or catalog and catalog.get("execution_id")
-            )
-
-            if not execution_id:
-                raise ValueError("no execution data found")
+        job_query = {
+            **({"status": status} if status else {})
+        }
 
         # -------------------------------
-        # FILTERS
+        # SEARCH FILTER (regex)
         # -------------------------------
-        if benchmark_name:
-            query["benchmark_name"] = benchmark_name
-
-        if benchmark_category:
-            query["benchmark_category"] = benchmark_category
+        if search:
+            job_query["$or"] = [
+                {"stage_name": {"$regex": search, "$options": "i"}},
+                {"task_name": {"$regex": search, "$options": "i"}},
+                {"stage_type": {"$regex": search, "$options": "i"}},
+                {"task_type": {"$regex": search, "$options": "i"}}
+            ]
 
         # -------------------------------
-        # FETCH DATA
+        # FETCH JOBS
         # -------------------------------
-        data = list(workflow_runs_collection.find({
-            **query,
-            **({"execution_id": execution_id} if execution_id else {}),
-            "status": {"$ne": "DELETED"}
-        }))
+        jobs_cursor = jobs_collection.find(job_query).skip(skip).limit(limit)
+        jobs = list(jobs_cursor)
 
-        if not data:
+        if not jobs:
             raise ValueError("no execution data found")
 
-        response = []
+        # -------------------------------
+        # UNIQUE execution_ids
+        # -------------------------------
+        execution_ids = list({job["execution_id"] for job in jobs})
 
-        for doc in data:
+        # -------------------------------
+        # FETCH RELATED DATA (NO LOOPS)
+        # -------------------------------
+        executions = {
+            str(doc["_id"]): serialize_doc(doc)
+            for doc in benchmark_execution_collection.find(
+                {"_id": {"$in": execution_ids}}
+            )
+        }
 
-            exec_id = doc.get("execution_id")
+        workflows = {
+            str(doc["execution_id"]): serialize_doc(doc)
+            for doc in workflow_runs_collection.find(
+                {"execution_id": {"$in": execution_ids}}
+            )
+        }
 
-            execution = benchmark_execution_collection.find_one({"_id": exec_id})
-            catalog = workflow_catalog_collection.find_one({"execution_id": exec_id})
+        catalogs = {
+            str(doc["execution_id"]): serialize_doc(doc)
+            for doc in workflow_catalog_collection.find(
+                {"execution_id": {"$in": execution_ids}}
+            )
+        }
 
-            # -------------------------------
-            # SORT STAGES (ASC)
-            # -------------------------------
-            if doc.get("workflow") and doc["workflow"].get("stages"):
-                doc["workflow"]["stages"] = sorted(
-                    doc["workflow"]["stages"],
-                    key=lambda x: x.get("stage_order", 0)
-                )
+        # -------------------------------
+        # BUILD RESPONSE
+        # -------------------------------
+        response = [
+            {
+                "job": serialize_doc(job),
+                "benchmark_execution": executions.get(str(job["execution_id"])),
+                "workflow_run": workflows.get(str(job["execution_id"])),
+                "workflow_catalog": catalogs.get(str(job["execution_id"]))
+            }
+            for job in jobs
+        ]
 
-            # serialize
-            doc = serialize_doc(doc)
-            execution = serialize_doc(execution)
-            catalog = serialize_doc(catalog)
+        # -------------------------------
+        # TOTAL COUNT
+        # -------------------------------
+        total = jobs_collection.count_documents(job_query)
 
-            response.append({
-                "workflow_run": doc,
-                "benchmark_execution": execution,
-                "workflow_catalog": catalog
-            })
-
-        return response
+        return {
+            "items": response,
+            "pagination": {
+                "total": total,
+                "page": page,
+                "limit": limit,
+                "pages": (total + limit - 1) // limit
+            }
+        }
 
     except ValueError as e:
         raise ValueError(str(e))
@@ -316,3 +337,74 @@ def delete_benchmark_execution_service(id):
         raise ValueError(str(e))
     except Exception as e:
         raise Exception(str(e))
+    
+
+def build_jobs_from_workflow(workflow, execution_id):
+    try:
+        stages = workflow.get("stages", [])
+
+        return [
+            {
+                "execution_id": execution_id,
+
+                "stage_type": stage.get("stage_type"),
+                "stage_name": stage.get("stage_name"),
+                "stage_order": stage.get("stage_order"),
+
+                "task_type": stage.get("task_type"),
+                "task_name": stage.get("task_name"),
+                "task_order": stage.get("task_order"),
+
+                "status": "QUEUED",
+                "started_at": None,
+                "finished_at": None,
+
+                "created_on": datetime.utcnow(),
+                "updated_on": None
+            }
+            for stage in stages
+        ]
+
+    except Exception as e:
+        raise Exception(str(e))
+    
+
+# def update_job_status_service(job_id, status):
+#     try:
+#         try:
+#             obj_id = ObjectId(job_id)
+#         except:
+#             raise ValueError("invalid job id")
+
+#         valid_status = ["QUEUED", "RUNNING", "COMPLETED", "FAILED"]
+
+#         if status not in valid_status:
+#             raise ValueError("invalid status")
+
+#         update_data = {
+#             "status": status,
+#             "updated_on": datetime.utcnow()
+#         }
+
+#         # -------------------------------
+#         # AUTO TIMESTAMPS
+#         # -------------------------------
+#         if status == "RUNNING":
+#             update_data["started_at"] = datetime.utcnow()
+
+#         if status == "COMPLETED":
+#             update_data["finished_at"] = datetime.utcnow()
+
+#         jobs_collection.update_one(
+#             {"_id": obj_id},
+#             {"$set": update_data}
+#         )
+
+#         job = jobs_collection.find_one({"_id": obj_id})
+
+#         return serialize_doc(job)
+
+#     except ValueError as e:
+#         raise ValueError(str(e))
+#     except Exception as e:
+#         raise Exception(str(e))

@@ -9,7 +9,7 @@ from app.services.benchmark_execution_service import (
     create_benchmark_execution_service,
     get_benchmark_execution_service,
     patch_benchmark_execution_service,
-    delete_benchmark_execution_service
+    delete_benchmark_execution_service,
 )
 
 from app.utils.response import success_response, error_response
@@ -31,11 +31,19 @@ def create_execution(payload: BenchmarkExecutionCreate):
 @router.get("")
 def get_execution(
     id: str | None = Query(None),
-    benchmark_name: str | None = Query(None),
-    benchmark_category: str | None = Query(None)
+    status: str | None = Query(None),
+    search: str | None = Query(None),
+    page: int = Query(1, ge=1),
+    limit: int = Query(10, le=100)
 ):
     try:
-        data = get_benchmark_execution_service(id, benchmark_name, benchmark_category)
+        data = get_benchmark_execution_service(
+            id=id,
+            status=status,
+            search=search,
+            page=page,
+            limit=limit
+        )
         return success_response("execution fetched", data, 200)
     except ValueError as e:
         return error_response(str(e), 400)
@@ -52,7 +60,7 @@ def patch_execution(id: str, payload: BenchmarkExecutionPatch):
         return error_response(str(e), 400)
     except Exception as e:
         return error_response(str(e), 500)
-
+    
 
 @router.delete("/{id}")
 def delete_execution(id: str):
