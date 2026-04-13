@@ -15,33 +15,56 @@ def update_job_status_service(job_id, status):
         except:
             raise ValueError("invalid job id")
 
-        valid_status = ["QUEUED", "RUNNING", "COMPLETED", "FAILED", "running" , "completed"]
+        # -------------------------------
+        # VALIDATE STATUS (normalize)
+        # -------------------------------
+        status = status.upper()
+
+        valid_status = {"QUEUED", "RUNNING", "COMPLETED", "FAILED"}
 
         if status not in valid_status:
             raise ValueError("invalid status")
 
+        # -------------------------------
+        # CHECK JOB EXISTS
+        # -------------------------------
+        job = jobs_collection.find_one({"_id": obj_id})
+
+        if not job:
+            raise ValueError("job not found")
+
+        # -------------------------------
+        # PREPARE UPDATE
+        # -------------------------------
         update_data = {
             "status": status,
             "updated_on": datetime.utcnow()
         }
 
-        # -------------------------------
-        # AUTO TIMESTAMPS
-        # -------------------------------
-        if status == "RUNNING" or status == "running":
+        # AUTO TIMESTAMPS (clean)
+        if status == "RUNNING" and not job.get("started_at"):
             update_data["started_at"] = datetime.utcnow()
 
-        if status == "COMPLETED" or status == "completed":
+        if status == "COMPLETED" and not job.get("finished_at"):
             update_data["finished_at"] = datetime.utcnow()
 
-        jobs_collection.update_one(
+        # -------------------------------
+        # UPDATE
+        # -------------------------------
+        result = jobs_collection.update_one(
             {"_id": obj_id},
             {"$set": update_data}
         )
 
-        job = jobs_collection.find_one({"_id": obj_id})
+        if result.matched_count == 0:
+            raise ValueError("job not found")
 
-        return serialize_doc(job)
+        # -------------------------------
+        # RETURN UPDATED DOC
+        # -------------------------------
+        updated_job = jobs_collection.find_one({"_id": obj_id})
+
+        return serialize_doc(updated_job)
 
     except ValueError as e:
         raise ValueError(str(e))
