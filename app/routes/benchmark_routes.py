@@ -158,17 +158,17 @@ def delete_benchmark(
         return error_response("internal server error", 500)
 
 
-# @router.post("/ai-validate")
-# async def ai_validate(payload: dict):
+@router.post("/ai-validate")
+async def ai_validate(payload: dict):
 
-#     result = validate_benchmark(payload)
+    result = validate_benchmark(payload)
 
-#     return {
-#         "status": "success",
-#         "message": "AI validation completed",
-#         "status_code": 200,
-#         "data": result
-#     }
+    return {
+        "status": "success",
+        "message": "AI validation completed",
+        "status_code": 200,
+        "data": result
+    }
 
 
 @router.post("/generate-benchmark")

@@ -131,41 +131,74 @@ def get_benchmark_execution_service(
     try:
         skip = (page - 1) * limit
 
-        # -------------------------------
-        # BASE QUERY ON JOBS
-        # -------------------------------
-        job_query = {
-            **({"status": status} if status else {})
-        }
+        job_query = {}
 
         # -------------------------------
-        # SEARCH FILTER (regex)
+        # ID FILTER (HIGHEST PRIORITY)
         # -------------------------------
-        if search:
-            job_query["$or"] = [
-                {"stage_name": {"$regex": search, "$options": "i"}},
-                {"task_name": {"$regex": search, "$options": "i"}},
-                {"stage_type": {"$regex": search, "$options": "i"}},
-                {"task_type": {"$regex": search, "$options": "i"}}
-            ]
+        if id:
+            try:
+                obj_id = ObjectId(id)
+            except:
+                raise ValueError("invalid id")
+
+            # ensure execution exists
+            execution = benchmark_execution_collection.find_one({"_id": obj_id})
+
+            if not execution:
+                raise ValueError("no execution data found")
+
+            job_query["execution_id"] = obj_id
+
+        # -------------------------------
+        # STATUS FILTER
+        # -------------------------------
+        if status:
+            job_query["status"] = {
+                "$regex": f"^{status}$",
+                "$options": "i"
+            }
+
+        # -------------------------------
+        # SEARCH FILTER (ONLY IF NO ID)
+        # -------------------------------
+        if search and not id:
+            import re
+            search = re.escape(search)
+
+            workflow_matches = workflow_runs_collection.find({
+                "$or": [
+                    {"workflow.stages.stage_name": {"$regex": search, "$options": "i"}},
+                    {"workflow.stages.task_name": {"$regex": search, "$options": "i"}},
+                    {"workflow.stages.task_type": {"$regex": search, "$options": "i"}},
+                    {"workflow.stages.parameters.action": {"$regex": search, "$options": "i"}}
+                ]
+            }, {"execution_id": 1})
+
+            execution_ids = [doc["execution_id"] for doc in workflow_matches]
+
+            if not execution_ids:
+                raise ValueError("no execution data found")
+
+            job_query["execution_id"] = {"$in": execution_ids}
 
         # -------------------------------
         # FETCH JOBS
         # -------------------------------
-        jobs_cursor = jobs_collection.find(job_query).skip(skip).limit(limit)
-        jobs = list(jobs_cursor)
+        jobs = list(
+            jobs_collection.find(job_query)
+            .skip(skip)
+            .limit(limit)
+        )
 
         if not jobs:
             raise ValueError("no execution data found")
 
         # -------------------------------
-        # UNIQUE execution_ids
+        # FETCH RELATED DATA
         # -------------------------------
         execution_ids = list({job["execution_id"] for job in jobs})
 
-        # -------------------------------
-        # FETCH RELATED DATA (NO LOOPS)
-        # -------------------------------
         executions = {
             str(doc["_id"]): serialize_doc(doc)
             for doc in benchmark_execution_collection.find(
@@ -187,9 +220,6 @@ def get_benchmark_execution_service(
             )
         }
 
-        # -------------------------------
-        # BUILD RESPONSE
-        # -------------------------------
         response = [
             {
                 "job": serialize_doc(job),
@@ -200,9 +230,6 @@ def get_benchmark_execution_service(
             for job in jobs
         ]
 
-        # -------------------------------
-        # TOTAL COUNT
-        # -------------------------------
         total = jobs_collection.count_documents(job_query)
 
         return {
@@ -219,7 +246,6 @@ def get_benchmark_execution_service(
         raise ValueError(str(e))
     except Exception as e:
         raise Exception(str(e))
-
 
 # -------------------------------
 # PATCH
