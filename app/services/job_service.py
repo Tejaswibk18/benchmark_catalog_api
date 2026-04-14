@@ -89,3 +89,26 @@ def get_jobs_summary_service():
 
     except Exception as e:
         raise Exception(str(e))
+    
+
+# -------------------------------
+# GET JOB BY ID
+# -------------------------------
+def get_job_by_id_service(job_id):
+    try:
+        try:
+            obj_id = ObjectId(job_id)
+        except:
+            raise ValueError("invalid job id")
+
+        job = jobs_collection.find_one({"_id": obj_id})
+
+        if not job:
+            raise ValueError("job not found")
+
+        return serialize_doc(job)
+
+    except ValueError as e:
+        raise ValueError(str(e))
+    except Exception as e:
+        raise Exception(str(e))

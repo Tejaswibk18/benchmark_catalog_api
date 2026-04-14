@@ -3,7 +3,8 @@ from fastapi import APIRouter
 from app.schemas.job_schema import JobStatusUpdate
 from app.services.job_service import (
     update_job_status_service,
-    get_jobs_summary_service
+    get_jobs_summary_service,
+    get_job_by_id_service
 )
 
 from app.utils.response import success_response, error_response
@@ -31,5 +32,18 @@ def get_jobs_summary():
     try:
         data = get_jobs_summary_service()
         return success_response("jobs fetched", data, 200)
+    except Exception as e:
+        return error_response(str(e), 500)
+    
+# -------------------------------
+# GET JOB BY ID
+# -------------------------------
+@router.get("/{job_id}")
+def get_job_by_id(job_id: str):
+    try:
+        data = get_job_by_id_service(job_id)
+        return success_response("job fetched", data, 200)
+    except ValueError as e:
+        return error_response(str(e), 400)
     except Exception as e:
         return error_response(str(e), 500)
