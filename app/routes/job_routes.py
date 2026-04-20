@@ -1,10 +1,13 @@
 from fastapi import APIRouter
+from fastapi import Query
+from app.schemas.job_schema import JobResultPayload , JobStatusUpdate
 
-from app.schemas.job_schema import JobStatusUpdate
+
 from app.services.job_service import (
     update_job_status_service,
     get_jobs_summary_service,
-    get_job_by_id_service
+    get_job_by_id_service,
+    update_job_result_service
 )
 
 from app.utils.response import success_response, error_response
@@ -20,6 +23,15 @@ def update_job_status(job_id: str, payload: JobStatusUpdate):
     try:
         data = update_job_status_service(job_id, payload.status)
         return success_response("job status updated", data, 200)
+    except Exception as e:
+        return error_response(str(e), 500)
+    
+
+@router.patch("/{job_id}/result")
+def update_job_result(job_id: str, payload: JobResultPayload):
+    try:
+        data = update_job_result_service(job_id, payload)
+        return success_response("job result updated", data, 200)
     except Exception as e:
         return error_response(str(e), 500)
 
@@ -38,11 +50,11 @@ def get_jobs_summary():
 # -------------------------------
 # GET JOB BY ID
 # -------------------------------
-@router.get("/{job_id}")
-def get_job_by_id(job_id: str):
+@router.get("")
+def get_jobs(job_id: str | None = Query(None)):
     try:
         data = get_job_by_id_service(job_id)
-        return success_response("job fetched", data, 200)
+        return success_response("job(s) fetched", data, 200)
     except ValueError as e:
         return error_response(str(e), 400)
     except Exception as e:

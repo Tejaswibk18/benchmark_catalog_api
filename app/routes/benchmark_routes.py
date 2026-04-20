@@ -137,7 +137,7 @@ def patch_benchmark_api(
         return error_response("internal server error", 500)
     
 
-@router.delete("/benchmark/{id}")
+@router.delete("/benchmark/{id}" , operation_id="deleteBenchmarkById")
 def delete_benchmark(
     id: str,
     user: dict = Depends(get_current_user)
@@ -158,46 +158,46 @@ def delete_benchmark(
         return error_response("internal server error", 500)
 
 
-@router.post("/ai-validate")
-async def ai_validate(payload: dict):
+# @router.post("/ai-validate")
+# async def ai_validate(payload: dict):
 
-    result = validate_benchmark(payload)
+#     result = validate_benchmark(payload)
 
-    return {
-        "status": "success",
-        "message": "AI validation completed",
-        "status_code": 200,
-        "data": result
-    }
-
-
-@router.post("/generate-benchmark")
-async def generate_benchmark(payload: dict):
-
-    prompt = payload.get("prompt")
-
-    result = generate_benchmark_from_text(prompt)
-
-    return {
-        "status": "success",
-        "message": "Benchmark generated using AI",
-        "status_code": 200,
-        "data": result
-    }
+#     return {
+#         "status": "success",
+#         "message": "AI validation completed",
+#         "status_code": 200,
+#         "data": result
+#     }
 
 
-@router.post("/ai-fix")
-def ai_fix(payload: dict):
+# @router.post("/generate-benchmark")
+# async def generate_benchmark(payload: dict):
 
-    try:
+#     prompt = payload.get("prompt")
 
-        result = auto_fix_benchmark(payload)
+#     result = generate_benchmark_from_text(prompt)
 
-        return success_response(
-            "AI auto-fix completed",
-            result,
-            200
-        )
+#     return {
+#         "status": "success",
+#         "message": "Benchmark generated using AI",
+#         "status_code": 200,
+#         "data": result
+#     }
 
-    except Exception:
-        return error_response("internal server error", 500)
+
+# @router.post("/ai-fix")
+# def ai_fix(payload: dict):
+
+#     try:
+
+#         result = auto_fix_benchmark(payload)
+
+#         return success_response(
+#             "AI auto-fix completed",
+#             result,
+#             200
+#         )
+
+#     except Exception:
+#         return error_response("internal server error", 500)

@@ -1,0 +1,204 @@
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'
+Traceback (most recent call last):
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/scheduler.py", line 7, in <module>
+    from app.database.connection import jobs_collection
+  File "/mnt/c/Users/User/Desktop/code/benchmark_catalog_api/app/database/connection.py", line 1, in <module>
+    from pymongo import MongoClient
+ModuleNotFoundError: No module named 'pymongo'

@@ -369,68 +369,43 @@ def build_jobs_from_workflow(workflow, execution_id):
     try:
         stages = workflow.get("stages", [])
 
-        return [
+        jobs = [
             {
                 "execution_id": execution_id,
 
+                # STAGE
                 "stage_type": stage.get("stage_type"),
                 "stage_name": stage.get("stage_name"),
                 "stage_order": stage.get("stage_order"),
 
+                # TASK
                 "task_type": stage.get("task_type"),
                 "task_name": stage.get("task_name"),
                 "task_order": stage.get("task_order"),
 
+                # SUT (IMPORTANT)
+                "sut_id": sut,
+
+                # STATUS
                 "status": "QUEUED",
                 "started_at": None,
                 "finished_at": None,
 
+                # RESULT (SINGLE)
+                "result": None,
+
+                # METADATA
                 "created_on": datetime.utcnow(),
                 "updated_on": None
             }
+
             for stage in stages
+            for sut in stage.get("target_sut", [])
         ]
+
+        return jobs
 
     except Exception as e:
         raise Exception(str(e))
     
 
-# def update_job_status_service(job_id, status):
-#     try:
-#         try:
-#             obj_id = ObjectId(job_id)
-#         except:
-#             raise ValueError("invalid job id")
-
-#         valid_status = ["QUEUED", "RUNNING", "COMPLETED", "FAILED"]
-
-#         if status not in valid_status:
-#             raise ValueError("invalid status")
-
-#         update_data = {
-#             "status": status,
-#             "updated_on": datetime.utcnow()
-#         }
-
-#         # -------------------------------
-#         # AUTO TIMESTAMPS
-#         # -------------------------------
-#         if status == "RUNNING":
-#             update_data["started_at"] = datetime.utcnow()
-
-#         if status == "COMPLETED":
-#             update_data["finished_at"] = datetime.utcnow()
-
-#         jobs_collection.update_one(
-#             {"_id": obj_id},
-#             {"$set": update_data}
-#         )
-
-#         job = jobs_collection.find_one({"_id": obj_id})
-
-#         return serialize_doc(job)
-
-#     except ValueError as e:
-#         raise ValueError(str(e))
-#     except Exception as e:
-#         raise Exception(str(e))
