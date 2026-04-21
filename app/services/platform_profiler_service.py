@@ -3,6 +3,8 @@ import os
 import json
 from datetime import datetime
 from app.database.connection import benchmark_results_collection
+from app.utils.platform_profiler_validator import validate_platform_profile
+from app.utils.helpers import serialize_doc
 
 
 def process_platform_profiler_service(file):
@@ -10,12 +12,12 @@ def process_platform_profiler_service(file):
         # -------------------------------
         # SAVE ZIP TEMP
         # -------------------------------
-        upload_dir = "uploads"
+        upload_dir = "uploads"                                #upload
         os.makedirs(upload_dir, exist_ok=True)
 
-        zip_path = os.path.join(upload_dir, file.filename)
+        zip_path = os.path.join(upload_dir, file.filename)    #path
 
-        with open(zip_path, "wb") as f:
+        with open(zip_path, "wb") as f:                       #save to disk
             f.write(file.file.read())
 
         # -------------------------------
@@ -51,6 +53,8 @@ def process_platform_profiler_service(file):
         with open(platform_json_path) as f:
             platform_profile = json.load(f)
 
+        validate_platform_profile(platform_profile)
+
         with open(results_log_path) as f:
             results_data = json.load(f)
 
@@ -65,9 +69,12 @@ def process_platform_profiler_service(file):
             "created_on": datetime.utcnow()
         }
 
-        benchmark_results_collection.insert_one(document)
+        # ONLY ONE INSERT
+        result = benchmark_results_collection.insert_one(document)
 
-        return document
+        saved_doc = benchmark_results_collection.find_one({"_id": result.inserted_id})
+
+        return serialize_doc(saved_doc)
 
     except Exception as e:
         raise Exception(str(e))

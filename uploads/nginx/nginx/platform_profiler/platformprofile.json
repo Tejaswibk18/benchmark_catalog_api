@@ -1,0 +1,7 @@
+{
+  "cpu": "Intel Xeon",
+  "cores": 8,
+  "memory": "16GB",
+  "os": "Ubuntu 22.04",
+  "network": "1Gbps"
+}

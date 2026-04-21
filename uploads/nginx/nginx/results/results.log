@@ -1,0 +1,6 @@
+{
+  "metrics": {
+    "requests_per_sec": 100,
+    "transfer_per_sec": 200
+  }
+}

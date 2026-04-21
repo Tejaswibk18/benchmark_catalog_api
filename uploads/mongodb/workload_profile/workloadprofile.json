@@ -1,0 +1,10 @@
+{
+  "tool": "mongobench",
+  "total_requests": 100000,
+  "clients": 50,
+  "threads": 4,
+  "data_size": "512 bytes",
+  "tests": ["INSERT", "FIND", "UPDATE", "DELETE"],
+  "pipeline": 16,
+  "duration": "60s"
+}

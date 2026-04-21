@@ -1,0 +1,10 @@
+{
+  "tool": "redis-benchmark",
+  "total_requests": 100000,
+  "clients": 50,
+  "threads": 4,
+  "data_size": "3 bytes",
+  "tests": ["SET", "GET", "LPUSH", "LPOP"],
+  "pipeline": 16,
+  "duration": "60s"
+}
