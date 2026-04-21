@@ -1,0 +1,26 @@
+{
+  "bios": {
+    "vendor": "American Megatrends Inc.",
+    "version": "",
+    "release_date": "03/15/2022"
+  },
+  "cpu_usage": {
+    "user": "31.5%",
+    "system": "",
+    "idle": "57.3%",
+    "load_avg_1min": "2.10",
+    "load_avg_5min": "1.90",
+    "load_avg_15min": "1.75"
+  },
+  "os": {
+    "name": "Ubuntu",
+    "version": "22.04",
+    "kernel": "",
+    "architecture": "x86_64"
+  },
+  "manufacturer": {
+    "name": "Dell Inc.",
+    "model": "",
+    "serial": "SVC-20220315"
+  }
+}

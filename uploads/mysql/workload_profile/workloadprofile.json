@@ -1,0 +1,10 @@
+{
+  "tool": "sysbench",
+  "total_requests": 100000,
+  "clients": 50,
+  "threads": 4,
+  "data_size": "4096 bytes",
+  "tests": ["SELECT", "INSERT", "UPDATE", "DELETE"],
+  "pipeline": 16,
+  "duration": "60s"
+}

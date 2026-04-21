@@ -1,0 +1,10 @@
+{
+  "tool": "cassandra-stress",
+  "total_requests": 100000,
+  "clients": 50,
+  "threads": 4,
+  "data_size": "2048 bytes",
+  "tests": ["WRITE", "READ", "MIXED"],
+  "pipeline": 16,
+  "duration": "60s"
+}

@@ -1,6 +1,5 @@
 import re
 
-
 REQUIRED_FIELDS = [
     "bios",
     "cpu_usage",
@@ -9,28 +8,69 @@ REQUIRED_FIELDS = [
 ]
 
 
-def validate_text(value, field):
+def validate_text(value, field, errors):
+    # -------------------------------
+    # EMPTY CHECK
+    # -------------------------------
     if value is None or str(value).strip() == "":
-        raise ValueError(f"{field} cannot be empty")
+        errors.append({
+            "field": field,
+            "error": "cannot be empty"
+        })
+        return
 
+    # -------------------------------
+    # REGEX VALIDATION
+    # -------------------------------
     if not re.fullmatch(r"[A-Za-z0-9 .,_:%@()\-+/]+", str(value)):
-        raise ValueError(f"{field} contains invalid characters")
+        errors.append({
+            "field": field,
+            "error": "contains invalid characters"
+        })
 
 
 def validate_platform_profile(data: dict):
+    errors = []
+
     try:
         for field in REQUIRED_FIELDS:
+
+            # -------------------------------
+            # REQUIRED FIELD CHECK
+            # -------------------------------
             if field not in data:
-                raise ValueError(f"{field} is required")
+                errors.append({
+                    "field": field,
+                    "error": "is required"
+                })
+                continue
 
             value = data.get(field)
 
-            # handle nested dict OR string
+            # -------------------------------
+            # NESTED DICT HANDLING
+            # -------------------------------
             if isinstance(value, dict):
                 for k, v in value.items():
-                    validate_text(v, f"{field}.{k}")
+                    validate_text(v, f"{field}.{k}", errors)
             else:
-                validate_text(value, field)
+                validate_text(value, field, errors)
+
+        # -------------------------------
+        # FINAL ERROR THROW
+        # -------------------------------
+        if errors:
+            raise ValueError(errors)
+
+        return True  # optional success
 
     except Exception as e:
-        raise ValueError(str(e))
+        # if already structured error list
+        if isinstance(e.args[0], list):
+            raise ValueError(e.args[0])
+
+        # fallback (unexpected errors)
+        raise ValueError([{
+            "field": "system",
+            "error": str(e)
+        }])

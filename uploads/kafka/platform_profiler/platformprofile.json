@@ -1,0 +1,16 @@
+{
+  "cpu_usage": {
+    "user": "38.4%",
+    "system": "11.7%",
+    "idle": "49.9%",
+    "load_avg_1min": "2.75",
+    "load_avg_5min": "2.50",
+    "load_avg_15min": "2.30"
+  },
+  "os": {
+    "name": "Ubuntu",
+    "version": "22.04",
+    "kernel": "5.15.0",
+    "architecture": "x86_64"
+  }
+}

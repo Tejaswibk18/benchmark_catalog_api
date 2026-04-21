@@ -1,0 +1,21 @@
+{
+  "bios": {
+    "vendor": "Phoenix Technologies",
+    "version": "1.45",
+    "release_date": "09/12/2022"
+  },
+  "cpu_usage": {
+    "user": "44.1%",
+    "system": "",
+    "idle": "47.3%",
+    "load_avg_1min": "3.20",
+    "load_avg_5min": "2.95",
+    "load_avg_15min": "2.70"
+  },
+  "os": {
+    "name": "Ubuntu",
+    "version": "22.04",
+    "kernel": "5.15.0",
+    "architecture": "x86_64"
+  }
+}

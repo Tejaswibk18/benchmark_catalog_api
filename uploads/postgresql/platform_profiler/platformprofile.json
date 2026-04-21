@@ -1,0 +1,26 @@
+{
+  "bios": {
+    "vendor": "HP Inc.",
+    "version": "U30",
+    "release_date": "11/14/2022"
+  },
+  "cpu_usage": {
+    "user": "41.2%",
+    "system": "15.6%",
+    "idle": "43.2%",
+    "load_avg_1min": "3.10",
+    "load_avg_5min": "2.85",
+    "load_avg_15min": "2.60"
+  },
+  "os": {
+    "name": "Ubuntu",
+    "version": "22.04",
+    "kernel": "5.15.0",
+    "architecture": "x86_64"
+  },
+  "manufacturer": {
+    "name": "HP Inc.",
+    "model": "ProLiant DL380 Gen10",
+    "serial": "SVC-20230215"
+  }
+}

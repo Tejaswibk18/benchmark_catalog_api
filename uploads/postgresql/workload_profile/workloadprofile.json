@@ -1,10 +1,10 @@
 {
-  "tool": "mongobench",
+  "tool": "pgbench",
   "total_requests": 100000,
   "clients": 50,
   "threads": 4,
-  "data_size": "512 bytes",
-  "tests": ["INSERT", "FIND", "UPDATE", "DELETE"],
+  "data_size": "8192 bytes",
+  "tests": ["SELECT", "INSERT", "UPDATE", "DELETE"],
   "pipeline": 16,
   "duration": "60s"
 }

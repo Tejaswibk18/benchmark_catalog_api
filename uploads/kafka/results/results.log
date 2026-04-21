@@ -1,0 +1,17 @@
+{
+  "metrics": {
+    "requests_per_sec": 135000,
+    "transfer_per_sec": "230 MB/s",
+    "latency_avg_ms": 0.9,
+    "latency_p95_ms": 2.1,
+    "latency_p99_ms": 3.5
+  },
+  "errors": {
+    "timeouts": 0,
+    "connection_errors": 0
+  },
+  "throughput": {
+    "read_ops": 75000,
+    "write_ops": 60000
+  }
+}
